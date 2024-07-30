@@ -4,6 +4,9 @@
 /uploads
 /node_modules
 yarn-error.log
+.uploads
+data
+.vscode
 
 .idea
 
