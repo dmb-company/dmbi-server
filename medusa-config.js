@@ -21,36 +21,13 @@ try {
   dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
 } catch (e) {}
 
-// CORS when consuming Medusa from admin
-const ADMIN_CORS =
-  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
-
-// CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
-
-const DATABASE_URL =
-  process.env.DATABASE_URL;
-
-const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const DATABASE_URL = process.env.DATABASE_URL;
 
 const plugins = [
   `medusa-fulfillment-manual`,
   `medusa-payment-manual`,
   {
-    resolve: `@medusajs/file-local`,
-    options: {
-      upload_dir: "uploads",
-    },
-  },
-  {
-    resolve: "@medusajs/admin",
-    /** @type {import('@medusajs/admin').PluginOptions} */
-    options: {
-      autoRebuild: true,
-      develop: {
-        open: process.env.OPEN_BROWSER !== "false",
-      },
-    },
+    resolve: `medusa-file-cloudinary`,
   },
 ];
 
@@ -73,16 +50,14 @@ const modules = {
 const projectConfig = {
   jwt_secret: process.env.JWT_SECRET || "supersecret",
   cookie_secret: process.env.COOKIE_SECRET || "supersecret",
-  store_cors: STORE_CORS,
+  store_cors: process.env.STORE_CORS,
   database_url: DATABASE_URL,
-  admin_cors: ADMIN_CORS,
-  // Uncomment the following lines to enable REDIS
-  // redis_url: REDIS_URL
+  admin_cors: process.env.ADMIN_CORS || "http://localhost:7000",
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
-  projectConfig,
   plugins,
+  projectConfig,
   modules,
 };
