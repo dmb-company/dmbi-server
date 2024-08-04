@@ -52,7 +52,7 @@ const projectConfig = {
   cookie_secret: process.env.COOKIE_SECRET || "supersecret",
   store_cors: process.env.STORE_CORS,
   database_url: DATABASE_URL,
-  admin_cors: process.env.ADMIN_CORS || "http://localhost:7000",
+  admin_cors: process.env.ADMIN_CORS,
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
