@@ -17,6 +17,7 @@ class PartnerService extends TransactionBaseService {
     async create(data) {
             return await this.atomicPhase_(async (manager: EntityManager) => {
                 const partnerRepository = manager.withRepository(this.partnerRepository_);
+                console.log(data)
     
                 const partner = await partnerRepository.create(data)
                 return await partnerRepository.save(partner);
@@ -27,7 +28,6 @@ class PartnerService extends TransactionBaseService {
     async delete(id) {
         return await this.atomicPhase_(async (manager: EntityManager) => {
             const partnerRepository = manager.withRepository(this.partnerRepository_);
-            console.log(id)
             return await partnerRepository.delete(id);
         });
     }
