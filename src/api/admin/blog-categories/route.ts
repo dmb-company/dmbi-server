@@ -9,6 +9,17 @@ interface Post {
   categories?: string[];
 }
 
+export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
+  const manager: EntityManager = req.scope.resolve("manager");
+  const categoriesRepo = manager.getRepository("BlogCategory");
+  try {
+    const categories = await categoriesRepo.find();
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json({ error: req.body });
+  }
+};
+
 export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
   try {
     const manager: EntityManager = req.scope.resolve("manager");
